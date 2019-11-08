@@ -1,10 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
+<!--
 * Ruby version
 
 * System dependencies
@@ -21,4 +17,24 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+-->
+
+## Requirements
+
+* [Docker Desktop](https://www.docker.com/products/docker-desktop)
+
+## Docker Setup
+
+From the project folder, start the containers:
+
+```
+$ docker-compose up
+```
+
+Create and load database schema:
+
+```
+$ docker-compose run web rake db:setup
+```
+
+Navigate to the application’s root at [http://localhost:3000](http://localhost:3000)
