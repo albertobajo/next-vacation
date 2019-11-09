@@ -38,3 +38,9 @@ $ docker-compose run web rake db:setup
 ```
 
 Navigate to the application’s root at [http://localhost:3000](http://localhost:3000)
+
+## Test
+
+```
+$ docker-compose run web rspec
+```
