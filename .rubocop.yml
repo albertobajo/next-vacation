@@ -7,8 +7,15 @@ Metrics/LineLength:
     - 'bin/bundle'
     - 'db/seeds.rb'
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/SpecialGlobalVars:
   EnforcedStyle: use_perl_names
+
+Style/BlockComments:
+  Exclude:
+    - 'spec/spec_helper.rb'

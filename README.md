@@ -34,7 +34,7 @@ $ docker-compose up
 Create and load database schema:
 
 ```
-$ docker-compose run web rake db:setup
+$ docker-compose run web rake db:create db:migrate
 ```
 
 Navigate to the application’s root at [http://localhost:3000](http://localhost:3000)
