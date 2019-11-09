@@ -57,22 +57,21 @@ Layout/SpaceInsideArrayLiteralBrackets:
   Exclude:
     - 'config/environments/production.rb'
 
-# Offense count: 1
 Metrics/AbcSize:
-  Max: 18
+  Exclude:
+    - 'bin/bundle'
 
-# Offense count: 1
 Metrics/CyclomaticComplexity:
-  Max: 9
+  Exclude:
+    - 'bin/bundle'
 
-# Offense count: 2
-# Configuration parameters: CountComments, ExcludedMethods.
 Metrics/MethodLength:
-  Max: 13
+  Exclude:
+    - 'bin/bundle'
 
-# Offense count: 1
 Metrics/PerceivedComplexity:
-  Max: 9
+  Exclude:
+    - 'bin/bundle'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -98,13 +97,6 @@ Style/ExpandPathArguments:
     - 'bin/rails'
     - 'bin/rake'
 
-# Offense count: 30
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, never
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/IfUnlessModifier:
@@ -116,13 +108,6 @@ Style/IfUnlessModifier:
 Style/PerlBackrefs:
   Exclude:
     - 'bin/bundle'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: .
-# SupportedStyles: use_perl_names, use_english_names
-Style/SpecialGlobalVars:
-  EnforcedStyle: use_perl_names
 
 # Offense count: 38
 # Cop supports --auto-correct.
@@ -142,10 +127,3 @@ Style/StringLiterals:
 # SupportedStyles: percent, brackets
 Style/SymbolArray:
   EnforcedStyle: brackets
-
-# Offense count: 38
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
-# URISchemes: http, https
-Metrics/LineLength:
-  Max: 190
