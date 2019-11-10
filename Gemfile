@@ -33,12 +33,19 @@ group :development, :test do
 end
 
 group :development do
+  # Automatically run your specs (much like autotest).
+  gem 'guard', '~> 2.16', '>= 2.16.1', require: false
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
+  gem 'listen', '>= 3.0.5', '< 3.2'
   # A RuboCop extension focused on enforcing Rails best practices and coding conventions.
   gem 'rubocop-rails'
-  gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
