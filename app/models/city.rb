@@ -1,3 +1,7 @@
 class City < ApplicationRecord
-  validates :name, uniqueness: true
+  # Associations
+  has_many :districts, dependent: :destroy
+
+  # Validations
+  validates :name, presence: true, uniqueness: true
 end
