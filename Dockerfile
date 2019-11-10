@@ -4,7 +4,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update -qq \
     && apt-get install -y build-essential nodejs postgresql-client yarn \
-    && apt-get install -y redis-server
+    && apt-get install -y postgis redis-server
 RUN mkdir /next-vacation
 WORKDIR /next-vacation
 COPY Gemfile /next-vacation/Gemfile
