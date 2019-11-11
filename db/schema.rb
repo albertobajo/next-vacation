@@ -10,11 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_10_170124) do
+ActiveRecord::Schema.define(version: 2019_11_10_211846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
+
+  create_table "activities", force: :cascade do |t|
+    t.string "name"
+    t.integer "minutes_spent"
+    t.geometry "lonlat", limit: {:srid=>0, :type=>"st_point"}
+    t.bigint "category_id", null: false
+    t.bigint "district_id", null: false
+    t.bigint "location_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_activities_on_category_id"
+    t.index ["district_id"], name: "index_activities_on_district_id"
+    t.index ["location_id"], name: "index_activities_on_location_id"
+    t.index ["lonlat"], name: "index_activities_on_lonlat", using: :gist
+    t.index ["name"], name: "index_activities_on_name"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -46,5 +62,8 @@ ActiveRecord::Schema.define(version: 2019_11_10_170124) do
     t.index ["name"], name: "index_locations_on_name", unique: true
   end
 
+  add_foreign_key "activities", "categories"
+  add_foreign_key "activities", "districts"
+  add_foreign_key "activities", "locations"
   add_foreign_key "districts", "cities"
 end

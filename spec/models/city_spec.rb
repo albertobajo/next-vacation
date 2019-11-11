@@ -12,4 +12,8 @@ RSpec.describe City, type: :model do
   describe '.districts' do
     it { is_expected.to have_many(:districts).dependent(:destroy) }
   end
+
+  describe '.activites' do
+    it { is_expected.to have_many(:activities).through(:districts) }
+  end
 end

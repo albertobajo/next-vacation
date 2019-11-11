@@ -13,4 +13,8 @@ RSpec.describe District, type: :model do
     it { is_expected.to belong_to(:city) }
     it { is_expected.to validate_presence_of(:city) }
   end
+
+  describe '.activities' do
+    it { is_expected.to have_many(:activities).dependent(:nullify) }
+  end
 end
