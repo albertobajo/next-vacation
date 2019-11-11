@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Activity, type: :model do
-  subject { build(:activity) }
+  subject { create(:activity) }
 
   describe '#name' do
     it { is_expected.to respond_to(:name) }
     it { is_expected.to validate_presence_of(:name) }
-    # it { is_expected.to validate_uniqueness_of(:name).scoped_to(:city_id) }
+    it 'is expected to validate uniqueness scoped to district/city'
   end
 
   describe '#minutes_spent' do
@@ -36,5 +36,15 @@ RSpec.describe Activity, type: :model do
 
   describe '#opening_hours' do
     it { is_expected.to have_many(:opening_hours).dependent(:destroy) }
+  end
+
+  describe '.with_city' do
+    it 'is expected to return activities from the given city (name)' do
+      district = create(:district)
+      activities = create_list(:activity, 2, district: district)
+      create_list(:activity, 2)
+
+      expect(Activity.with_city(district.city.name)).to match_array(activities)
+    end
   end
 end

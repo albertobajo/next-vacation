@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :location do
-    name { %w[outdoors indoors].sample }
+    sequence(:name) { |n| "Location #{n}" }
   end
 end

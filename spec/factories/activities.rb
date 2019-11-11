@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :activity do
-    name { Faker::Company.name }
+    sequence(:name) { |n| "Activity #{n}" }
     minutes_spent { rand(30..360) }
     lonlat { "POINT(#{Faker::Address.longitude} #{Faker::Address.latitude})" }
     category
