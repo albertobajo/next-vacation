@@ -3,6 +3,7 @@ class Activity < ApplicationRecord
   belongs_to :category
   belongs_to :district
   belongs_to :location
+  has_many :opening_hours, dependent: :destroy
 
   # Delegations
   delegate :city, to: :district

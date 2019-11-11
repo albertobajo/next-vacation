@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_10_211846) do
+ActiveRecord::Schema.define(version: 2019_11_11_142311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,8 +62,22 @@ ActiveRecord::Schema.define(version: 2019_11_10_211846) do
     t.index ["name"], name: "index_locations_on_name", unique: true
   end
 
+  create_table "opening_hours", force: :cascade do |t|
+    t.integer "day_of_week"
+    t.integer "opens_at"
+    t.integer "closes_at"
+    t.bigint "activity_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["activity_id"], name: "index_opening_hours_on_activity_id"
+    t.index ["closes_at"], name: "index_opening_hours_on_closes_at"
+    t.index ["day_of_week"], name: "index_opening_hours_on_day_of_week"
+    t.index ["opens_at"], name: "index_opening_hours_on_opens_at"
+  end
+
   add_foreign_key "activities", "categories"
   add_foreign_key "activities", "districts"
   add_foreign_key "activities", "locations"
   add_foreign_key "districts", "cities"
+  add_foreign_key "opening_hours", "activities"
 end
