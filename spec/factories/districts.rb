@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :district do
-    name { Faker::Address.community }
+    sequence(:name) { |n| "District #{n}" }
     city
   end
 end

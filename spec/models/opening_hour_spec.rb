@@ -8,13 +8,13 @@ RSpec.describe OpeningHour, type: :model do
     it { is_expected.to validate_presence_of(:day_of_week) }
     it do
       dotw = {
-        monday: 0,
-        tuesday: 1,
-        wednesday: 2,
-        thursday: 3,
-        friday: 4,
-        saturday: 5,
-        sunday: 6
+        mo: 0,
+        tu: 1,
+        we: 2,
+        th: 3,
+        fr: 4,
+        sa: 5,
+        su: 6
       }
 
       is_expected.to define_enum_for(:day_of_week).with_values(dotw)

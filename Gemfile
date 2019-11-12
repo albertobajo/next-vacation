@@ -31,6 +31,8 @@ gem 'activerecord-postgis-adapter', '~> 6.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Strategies for cleaning databases. Can be used to ensure a clean state for testing.
+  gem 'database_cleaner', '~> 1.7'
   # Provides integration between factory_bot and rails 4.2 or newer
   gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
   # Easily generate fake data: names, addresses, phone numbers, etc.
