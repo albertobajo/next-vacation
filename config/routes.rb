@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api, constraints: { format: 'json' } do
     namespace :v1 do
       resources :activities, only: :index
+      resource :recommended_activity, only: :show
     end
   end
 end

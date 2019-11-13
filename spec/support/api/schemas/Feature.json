@@ -1,0 +1,243 @@
+{
+  "definitions": {},
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "type",
+    "properties",
+    "geometry"
+  ],
+  "properties": {
+    "type": {
+      "$id": "#/properties/type",
+      "type": "string",
+      "title": "The Type Schema",
+      "default": "",
+      "examples": [
+        "Feature"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "properties": {
+      "$id": "#/properties/properties",
+      "type": "object",
+      "title": "The Properties Schema",
+      "required": [
+        "name",
+        "opening_hours",
+        "hours_spent",
+        "category",
+        "location",
+        "district"
+      ],
+      "properties": {
+        "name": {
+          "$id": "#/properties/properties/properties/name",
+          "type": "string",
+          "title": "The Name Schema",
+          "default": "",
+          "examples": [
+            "El Retiro"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "opening_hours": {
+          "$id": "#/properties/properties/properties/opening_hours",
+          "type": "object",
+          "title": "The Opening_hours Schema",
+          "required": [
+            "mo",
+            "tu",
+            "we",
+            "th",
+            "fr",
+            "sa",
+            "su"
+          ],
+          "properties": {
+            "mo": {
+              "$id": "#/properties/properties/properties/opening_hours/properties/mo",
+              "type": "array",
+              "title": "The Mo Schema",
+              "items": {
+                "$id": "#/properties/properties/properties/opening_hours/properties/mo/items",
+                "type": "string",
+                "title": "The Items Schema",
+                "default": "",
+                "examples": [
+                  "00:00-23:59"
+                ],
+                "pattern": "^(.*)$"
+              }
+            },
+            "tu": {
+              "$id": "#/properties/properties/properties/opening_hours/properties/tu",
+              "type": "array",
+              "title": "The Tu Schema",
+              "items": {
+                "$id": "#/properties/properties/properties/opening_hours/properties/tu/items",
+                "type": "string",
+                "title": "The Items Schema",
+                "default": "",
+                "examples": [
+                  "00:00-23:59"
+                ],
+                "pattern": "^(.*)$"
+              }
+            },
+            "we": {
+              "$id": "#/properties/properties/properties/opening_hours/properties/we",
+              "type": "array",
+              "title": "The We Schema",
+              "items": {
+                "$id": "#/properties/properties/properties/opening_hours/properties/we/items",
+                "type": "string",
+                "title": "The Items Schema",
+                "default": "",
+                "examples": [
+                  "00:00-23:59"
+                ],
+                "pattern": "^(.*)$"
+              }
+            },
+            "th": {
+              "$id": "#/properties/properties/properties/opening_hours/properties/th",
+              "type": "array",
+              "title": "The Th Schema",
+              "items": {
+                "$id": "#/properties/properties/properties/opening_hours/properties/th/items",
+                "type": "string",
+                "title": "The Items Schema",
+                "default": "",
+                "examples": [
+                  "00:00-23:59"
+                ],
+                "pattern": "^(.*)$"
+              }
+            },
+            "fr": {
+              "$id": "#/properties/properties/properties/opening_hours/properties/fr",
+              "type": "array",
+              "title": "The Fr Schema",
+              "items": {
+                "$id": "#/properties/properties/properties/opening_hours/properties/fr/items",
+                "type": "string",
+                "title": "The Items Schema",
+                "default": "",
+                "examples": [
+                  "00:00-23:59"
+                ],
+                "pattern": "^(.*)$"
+              }
+            },
+            "sa": {
+              "$id": "#/properties/properties/properties/opening_hours/properties/sa",
+              "type": "array",
+              "title": "The Sa Schema",
+              "items": {
+                "$id": "#/properties/properties/properties/opening_hours/properties/sa/items",
+                "type": "string",
+                "title": "The Items Schema",
+                "default": "",
+                "examples": [
+                  "00:00-23:59"
+                ],
+                "pattern": "^(.*)$"
+              }
+            },
+            "su": {
+              "$id": "#/properties/properties/properties/opening_hours/properties/su",
+              "type": "array",
+              "title": "The Su Schema",
+              "items": {
+                "$id": "#/properties/properties/properties/opening_hours/properties/su/items",
+                "type": "string",
+                "title": "The Items Schema",
+                "default": "",
+                "examples": [
+                  "00:00-23:59"
+                ],
+                "pattern": "^(.*)$"
+              }
+            }
+          }
+        },
+        "hours_spent": {
+          "$id": "#/properties/properties/properties/hours_spent",
+          "type": "number",
+          "title": "The Hours_spent Schema",
+          "default": 0.0,
+          "examples": [
+            1.5
+          ]
+        },
+        "category": {
+          "$id": "#/properties/properties/properties/category",
+          "type": "string",
+          "title": "The Category Schema",
+          "default": "",
+          "examples": [
+            "nature"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "location": {
+          "$id": "#/properties/properties/properties/location",
+          "type": "string",
+          "title": "The Location Schema",
+          "default": "",
+          "examples": [
+            "outdoors"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "district": {
+          "$id": "#/properties/properties/properties/district",
+          "type": "string",
+          "title": "The District Schema",
+          "default": "",
+          "examples": [
+            "Retiro"
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    },
+    "geometry": {
+      "$id": "#/properties/geometry",
+      "type": "object",
+      "title": "The Geometry Schema",
+      "required": [
+        "type",
+        "coordinates"
+      ],
+      "properties": {
+        "type": {
+          "$id": "#/properties/geometry/properties/type",
+          "type": "string",
+          "title": "The Type Schema",
+          "default": "",
+          "examples": [
+            "Point"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "coordinates": {
+          "$id": "#/properties/geometry/properties/coordinates",
+          "type": "array",
+          "title": "The Coordinates Schema",
+          "items": {
+            "$id": "#/properties/geometry/properties/coordinates/items",
+            "type": "number",
+            "title": "The Items Schema",
+            "default": 0.0,
+            "examples": [
+              -3.6834559,
+              40.4154589
+            ]
+          }
+        }
+      }
+    }
+  }
+}
