@@ -48,6 +48,14 @@ RSpec.describe OpeningHour, type: :model do
     it { is_expected.to validate_presence_of(:activity) }
   end
 
+  describe '#time_to_s' do
+    it { is_expected.to respond_to(:time_to_s) }
+    it 'is expected to be formatted HH:mm' do
+      opening_hour = build(:opening_hour, opens_at: 3_600, closes_at: 36_000)
+      expect(opening_hour.time_to_s).to eq('01:00-10:00')
+    end
+  end
+
   context 'overlaps with another OpeningHour' do
     it 'is expected to be invalid'
   end

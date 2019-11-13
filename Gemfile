@@ -10,7 +10,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.7'
+gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -37,8 +37,10 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
   # Easily generate fake data: names, addresses, phone numbers, etc.
   gem 'faker', '~> 2.7'
+  # Ruby JSON Schema Validator
+  gem 'json-schema', '~> 2.8', '>= 2.8.1'
   # rspec-rails brings the RSpec testing framework to Ruby on Rails
-  gem 'rspec-rails', '~> 3.9'
+  gem 'rspec-rails', '~> 4.0.0.beta3'
   # One-liners to test common Rails functionality
   gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'
 end
@@ -48,6 +50,8 @@ group :development do
   gem 'guard', '~> 2.16', '>= 2.16.1', require: false
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
   gem 'listen', '>= 3.0.5', '< 3.2'
+  # Supporting gem for Rails Panel
+  gem 'meta_request', '~> 0.7.2'
   # A RuboCop extension focused on enforcing Rails best practices and coding conventions.
   gem 'rubocop-rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

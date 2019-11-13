@@ -28,7 +28,8 @@
 From the project folder, start the containers:
 
 ```
-$ docker-compose up
+$ docker-compose up --build
+$ docker-compose run web bundle install
 ```
 
 Create and load database schema:
@@ -42,5 +43,10 @@ Navigate to the application’s root at [http://localhost:3000](http://localhost
 ## Test
 
 ```
-$ docker-compose run web rspec
+$ docker-compose run web bundle exec rspec
+```
+
+## Guard
+```
+$ docker-compose run web bundle exec guard --clear
 ```

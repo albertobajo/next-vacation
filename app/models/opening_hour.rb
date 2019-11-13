@@ -24,4 +24,9 @@ class OpeningHour < ApplicationRecord
     greater_than: 0,
     less_than_or_equal_to: 86_400
   }
+
+  # Instance Methods
+  def time_to_s
+    "#{Time.at(opens_at).utc.strftime('%H:%M')}-#{Time.at(closes_at).utc.strftime('%H:%M')}"
+  end
 end
