@@ -8,13 +8,15 @@ RSpec.describe Api::V1::ActivitiesController, type: :controller do
   describe 'GET index' do
     it 'is expected to return a application/geo+json content-type' do
       get :index, params: { format: 'application/geo+json' }
+
       expect(response.content_type).to eq('application/geo+json')
     end
 
-    it 'is expected to return all information about the available activities' do
+    it 'is expected to return all information about the activities in GeoJSON format' do
       activity = create(:activity)
       get :index, params: { format: 'application/geo+json' }
 
+      expect(response).to match_response_schema('FeatureCollection')
       expect(response.body).to include(
         activity.name,
         activity.hours_spent.to_s,
@@ -22,10 +24,6 @@ RSpec.describe Api::V1::ActivitiesController, type: :controller do
         activity.location.name,
         activity.district.name
       )
-    end
-
-    it 'is expected to return data in GeoJSON format' do
-      # expect(response).to match_response_schema('feature-collection')
     end
 
     context 'with filters' do
@@ -36,6 +34,7 @@ RSpec.describe Api::V1::ActivitiesController, type: :controller do
         expected_activities = create_list(:activity, 2, category: category)
 
         get :index, params: { category: category.name, format: 'application/geo+json' }
+
         expect(response.body)
           .to include(*expected_activities.pluck(:name))
           .and not_include(*activities.pluck(:name))
@@ -46,6 +45,7 @@ RSpec.describe Api::V1::ActivitiesController, type: :controller do
         expected_activities = create_list(:activity, 2, location: location)
 
         get :index, params: { location: location.name, format: 'application/geo+json' }
+
         expect(response.body)
           .to include(*expected_activities.pluck(:name))
           .and not_include(*activities.pluck(:name))
@@ -56,6 +56,7 @@ RSpec.describe Api::V1::ActivitiesController, type: :controller do
         expected_activities = create_list(:activity, 2, district: district)
 
         get :index, params: { district: district.name, format: 'application/geo+json' }
+
         expect(response.body)
           .to include(*expected_activities.pluck(:name))
           .and not_include(*activities.pluck(:name))
@@ -67,8 +68,8 @@ RSpec.describe Api::V1::ActivitiesController, type: :controller do
 
       it 'is expected list all activities' do
         get :index, params: { format: 'application/geo+json' }
-        json_response = JSON.parse(response.body)
 
+        json_response = JSON.parse(response.body)
         expect(json_response['features'].length).to eq(10)
       end
     end
