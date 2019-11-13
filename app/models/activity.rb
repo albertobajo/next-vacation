@@ -6,15 +6,15 @@ class Activity < ApplicationRecord
   has_many :opening_hours, dependent: :destroy
 
   # Scopes
-  # scope :with_category, lambda { |name|
-  #   joins(:category).merge(Category.where(name: name))
-  # }
-  # scope :with_location, lambda { |name|
-  #   joins(:location).merge(Location.where(name: name))
-  # }
-  # scope :with_district, lambda { |name|
-  #   joins(:district).merge(District.where(name: name))
-  # }
+  scope :with_category, lambda { |name|
+    joins(:category).merge(Category.where(name: name))
+  }
+  scope :with_location, lambda { |name|
+    joins(:location).merge(Location.where(name: name))
+  }
+  scope :with_district, lambda { |name|
+    joins(:district).merge(District.where(name: name))
+  }
   scope :with_city, lambda { |name|
     joins(district: :city).where(districts: { cities: { name: name } })
   }
@@ -25,4 +25,9 @@ class Activity < ApplicationRecord
   # Validations
   validates :name, presence: true
   validates :district, presence: true
+
+  # Instance Methods
+  def hours_spent
+    (minutes_spent / 60.0).ceil(2)
+  end
 end

@@ -13,6 +13,14 @@ RSpec.describe Activity, type: :model do
     it { is_expected.to respond_to(:minutes_spent) }
   end
 
+  describe '#hours_spent' do
+    it { is_expected.to respond_to(:hours_spent) }
+    it 'is expected to return hours rounded upward with 2 decimals' do
+      subject.minutes_spent = 61
+      expect(subject.hours_spent).to eq(1.02)
+    end
+  end
+
   describe '#lonlat' do
     it { is_expected.to respond_to(:lonlat) }
   end
