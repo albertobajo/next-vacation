@@ -1,13 +1,13 @@
 class OpeningHour < ApplicationRecord
   # Enum
   enum day_of_week: {
-    mo: 0,
-    tu: 1,
-    we: 2,
-    th: 3,
-    fr: 4,
-    sa: 5,
-    su: 6
+    su: 0,
+    mo: 1,
+    tu: 2,
+    we: 3,
+    th: 4,
+    fr: 5,
+    sa: 6
   }
 
   # Hooks

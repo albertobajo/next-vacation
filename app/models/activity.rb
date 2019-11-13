@@ -37,36 +37,48 @@ class Activity < ApplicationRecord
   end
 
   # Class Methods
-  
-  def self.from_to(from_time, to_time)
+
+  def self.from_to_same_day(from_time, to_time)
     table = Arel::Table.new(:opening_hours)
-    from_time_sec = from_time.seconds_since_midnight
-    to_time_sec = to_time.seconds_since_midnight
 
-    # get first day
-    from_day = table[:day_of_week].in(from_time.wday)
-    from_last_entry = table[:last_entry_at].gteq(from_time_sec)
-    from_inside = (table[:opens_at].gteq(from_time_sec).and table[:closes_at].lteq(from_time_sec))
-    from_first_exit = table[:first_exit_at].lteq(from_time_sec)
-    first_day = from_day.and(from_last_entry.or(from_inside.or(from_first_exit)))
+    day = table[:day_of_week].in(from_time.wday)
 
-    # get in between
-    in_between_days = (from_time...to_time).map(&:wday).uniq.drop(1)
-    in_between = table[:day_of_week].in(in_between_days)
-
-    # get last day
-    to_day = table[:day_of_week].in(to_time.wday)
-    to_last_entry = table[:last_entry_at].gteq(to_time_sec)
-    to_inside = (table[:opens_at].gteq(to_time_sec).and table[:closes_at].lteq(to_time_sec))
-    to_first_exit = table[:first_exit_at].lteq(to_time_sec)
-    last_day = to_day.and(to_last_entry.or(to_inside.or(to_first_exit)))
+    last_entry = table[:last_entry_at].gteq(from_time.seconds_since_midnight)
+    first_exit = table[:first_exit_at].lteq(to_time.seconds_since_midnight)
+    query = day.and(last_entry.and(first_exit))
 
     left_outer_join = Activity.arel_table
                               .join(table, Arel::Nodes::OuterJoin)
                               .on(Activity.arel_table[:id].eq(table[:activity_id]))
                               .join_sources
 
-    joins(left_outer_join)
-      .where(first_day.or(in_between.or(last_day)))
+    joins(left_outer_join).where(query)
+  end
+
+  def self.from_to(from_time, to_time)
+    return Activity.from_to_same_day(from_time, to_time) if from_time.to_date == to_time.to_date
+
+    table = Arel::Table.new(:opening_hours)
+
+    # first day activities
+    from_day = table[:day_of_week].in(from_time.wday)
+    last_entry = table[:last_entry_at].gteq(from_time.seconds_since_midnight)
+    first_day = from_day.and(last_entry)
+
+    # in between days activities
+    in_between_days = (from_time...to_time).map(&:wday).uniq.drop(1)
+    in_between = table[:day_of_week].in(in_between_days)
+
+    # last day activities
+    to_day = table[:day_of_week].in(to_time.wday)
+    first_exit = table[:first_exit_at].lteq(to_time.seconds_since_midnight)
+    last_day = to_day.and(first_exit)
+
+    left_outer_join = Activity.arel_table
+                              .join(table, Arel::Nodes::OuterJoin)
+                              .on(Activity.arel_table[:id].eq(table[:activity_id]))
+                              .join_sources
+
+    joins(left_outer_join).where(first_day.or(in_between.or(last_day)))
   end
 end

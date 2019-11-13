@@ -66,5 +66,10 @@ Some examples:
 
 Some examples:
 
+Same day:
+
+- [http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201912121300&to=201912121800](http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201912121300&to=201912121800)
+
+Multiple days:
 - [http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201212181800&to=201212191230](http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201212181800&to=201212191230)
 - [http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201212181800&to=201212191300](http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201212181800&to=201212191300)
