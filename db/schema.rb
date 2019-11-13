@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_11_142311) do
+ActiveRecord::Schema.define(version: 2019_11_13_200724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,9 +69,13 @@ ActiveRecord::Schema.define(version: 2019_11_11_142311) do
     t.bigint "activity_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "first_exit_at"
+    t.integer "last_entry_at"
     t.index ["activity_id"], name: "index_opening_hours_on_activity_id"
     t.index ["closes_at"], name: "index_opening_hours_on_closes_at"
     t.index ["day_of_week"], name: "index_opening_hours_on_day_of_week"
+    t.index ["first_exit_at"], name: "index_opening_hours_on_first_exit_at"
+    t.index ["last_entry_at"], name: "index_opening_hours_on_last_entry_at"
     t.index ["opens_at"], name: "index_opening_hours_on_opens_at"
   end
 
