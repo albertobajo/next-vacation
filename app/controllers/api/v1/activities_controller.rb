@@ -4,7 +4,6 @@ class Api::V1::ActivitiesController < ApplicationController
 
   def index
     @activities = Activity.eager_load(:category, :location, :district, :opening_hours)
-
     @activities = @activities.with_category(@category_name) if @category_name
     @activities = @activities.with_district(@district_name) if @district_name
     @activities = @activities.with_location(@location_name) if @location_name
