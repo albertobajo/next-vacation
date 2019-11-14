@@ -28,6 +28,9 @@ $ docker-compose run web bundle exec rails db:create db:migrate
 ```
 
 ## RSpec
+
+There are [model specs](https://github.com/albertobajo/next-vacation/tree/master/spec/models) and [request specs](https://github.com/albertobajo/next-vacation/tree/master/spec/requests/api/v1).
+
 ```
 $ docker-compose run web bundle exec rspec
 ```
