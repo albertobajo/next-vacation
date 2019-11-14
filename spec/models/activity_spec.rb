@@ -55,4 +55,92 @@ RSpec.describe Activity, type: :model do
       expect(Activity.with_city(district.city.name)).to match_array(activities)
     end
   end
+
+  describe '.from_to_same_day' do
+    before(:each) do
+      # 08:00-10:00
+      @activity_one = create(:activity, minutes_spent: 60)
+      @oh_one = create(
+        :opening_hour, activity: @activity_one, day_of_week: :mo, opens_at: 28_800, closes_at: 36_000
+      )
+
+      # 12:00-14:00
+      @activity_two = create(:activity, minutes_spent: 60)
+      @oh_two = create(
+        :opening_hour, activity: @activity_two, day_of_week: :mo, opens_at: 43_200, closes_at: 50_400
+      )
+    end
+
+    it 'is expected to return activities that open and closes inside the time range' do
+      expect(
+        Activity.from_to_same_day(DateTime.parse('201912231200'), DateTime.parse('201912231400'))
+      ).to match_array([@activity_two])
+    end
+
+    context 'with time to visit' do
+      it 'is expected to return activities that opens out of the time range' do
+        expect(
+          Activity.from_to_same_day(DateTime.parse('201912230900'), DateTime.parse('201912231100'))
+        ).to match_array([@activity_one])
+      end
+
+      it 'is expected to return activities that closes out of the time range' do
+        expect(
+          Activity.from_to_same_day(DateTime.parse('201912231300'), DateTime.parse('201912231400'))
+        ).to match_array([@activity_two])
+      end
+    end
+
+    context 'with no time to visit' do
+      it 'is expected to discard activities that opens or closes in the time range' do
+        expect(
+          Activity.from_to_same_day(DateTime.parse('201912231330'), DateTime.parse('201912231430'))
+        ).to match_array([])
+      end
+    end
+  end
+
+  describe '.from_to' do
+    before(:each) do
+      # 08:00-10:00
+      @activity_one = create(:activity, minutes_spent: 60)
+      @oh_one = create(
+        :opening_hour, activity: @activity_one, day_of_week: :tu, opens_at: 28_800, closes_at: 36_000
+      )
+
+      # 12:00-14:00
+      @activity_two = create(:activity, minutes_spent: 60)
+      @oh_two = create(
+        :opening_hour, activity: @activity_two, day_of_week: :tu, opens_at: 43_200, closes_at: 50_400
+      )
+    end
+
+    it 'is expected to return activities that open and closes inside the time range' do
+      expect(
+        Activity.from_to(DateTime.parse('201912231200'), DateTime.parse('201912251400'))
+      ).to match_array([@activity_one, @activity_two])
+    end
+
+    context 'with time to visit' do
+      it 'is expected to return activities that opens out of the time range' do
+        expect(
+          Activity.from_to(DateTime.parse('201912241300'), DateTime.parse('201912251100'))
+        ).to match_array([@activity_two])
+      end
+
+      it 'is expected to return activities that closes out of the time range' do
+        expect(
+          Activity.from_to(DateTime.parse('201912231300'), DateTime.parse('201912240900'))
+        ).to match_array([@activity_one])
+      end
+    end
+
+    context 'with no time to visit' do
+      it 'is expected to discard activities that opens or closes in the time range' do
+        expect(
+          Activity.from_to(DateTime.parse('201912231300'), DateTime.parse('201912240830'))
+        ).to match_array([])
+      end
+    end
+  end
 end
