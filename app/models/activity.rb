@@ -38,14 +38,16 @@ class Activity < ApplicationRecord
 
   # Class Methods
 
-  def self.from_to_same_day(from_time, to_time)
+  def self.from_to_same_day(time_a, time_b)
     table = Arel::Table.new(:opening_hours)
 
-    day = table[:day_of_week].in(from_time.wday)
+    minutes_available = (time_b.to_time - time_a.to_time) / 60
 
-    last_entry = table[:last_entry_at].gteq(from_time.seconds_since_midnight)
-    first_exit = table[:first_exit_at].lteq(to_time.seconds_since_midnight)
-    query = day.and(last_entry.and(first_exit))
+    day = table[:day_of_week].in(time_a.wday)
+    duration = Activity.arel_table[:minutes_spent].lteq(minutes_available)
+    last_entry = table[:last_entry_at].gteq(time_a.seconds_since_midnight)
+    first_exit = table[:first_exit_at].lteq(time_b.seconds_since_midnight)
+    query = day.and(duration.and(last_entry.and(first_exit)))
 
     left_outer_join = Activity.arel_table
                               .join(table, Arel::Nodes::OuterJoin)
@@ -55,23 +57,23 @@ class Activity < ApplicationRecord
     joins(left_outer_join).where(query)
   end
 
-  def self.from_to(from_time, to_time)
-    return Activity.from_to_same_day(from_time, to_time) if from_time.to_date == to_time.to_date
+  def self.from_to(time_a, time_b)
+    return Activity.from_to_same_day(time_a, time_b) if time_a.to_date == time_b.to_date
 
     table = Arel::Table.new(:opening_hours)
 
     # first day activities
-    from_day = table[:day_of_week].in(from_time.wday)
-    last_entry = table[:last_entry_at].gteq(from_time.seconds_since_midnight)
+    from_day = table[:day_of_week].in(time_a.wday)
+    last_entry = table[:last_entry_at].gteq(time_a.seconds_since_midnight)
     first_day = from_day.and(last_entry)
 
     # in between days activities
-    in_between_days = (from_time...to_time).map(&:wday).uniq.drop(1)
+    in_between_days = (time_a...time_b).map(&:wday).uniq.drop(1)
     in_between = table[:day_of_week].in(in_between_days)
 
     # last day activities
-    to_day = table[:day_of_week].in(to_time.wday)
-    first_exit = table[:first_exit_at].lteq(to_time.seconds_since_midnight)
+    to_day = table[:day_of_week].in(time_b.wday)
+    first_exit = table[:first_exit_at].lteq(time_b.seconds_since_midnight)
     last_day = to_day.and(first_exit)
 
     left_outer_join = Activity.arel_table
