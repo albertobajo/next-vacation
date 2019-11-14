@@ -1,47 +1,33 @@
 # README
 
-<!--
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
--->
-
 ## Requirements
 
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-## Docker Setup
+## Installation
 
-From the project folder, start the containers:
-
+From the project folder, run bundle:
 ```
-$ docker-compose up --build
 $ docker-compose run web bundle install
 ```
 
-Create and load database schema:
+Build the app:
+```
+$ docker-compose build
+```
+
+Start the containers:
+```
+$ docker-compose up
+```
+
+Create and migrate the database:
 
 ```
-$ docker-compose run web rake db:create db:migrate
+$ docker-compose run web bundle exec rails db:create db:migrate
 ```
 
-Navigate to the application’s root at [http://localhost:3000](http://localhost:3000)
-
-## Test
-
+## RSpec
 ```
 $ docker-compose run web bundle exec rspec
 ```
@@ -50,3 +36,35 @@ $ docker-compose run web bundle exec rspec
 ```
 $ docker-compose run web bundle exec guard --clear
 ```
+
+## Program requirements
+
+### 1. Load the provided activities file
+
+There is a rake task for loading `madrid.json` file placed in folder `lib/assets`.
+
+With Bash:
+```
+$ docker-compose run web bundle exec rake activities:load[lib/assets/madrid.json,Madrid]
+```
+
+With ZSH:
+```
+$ docker-compose run web bundle exec rake activities:load\[lib/assets/madrid.json,Madrid\]
+```
+
+### 2. Create an endpoint that returns all available activities
+
+Some examples:
+
+- [http://localhost:3000/api/v1/activities.json](http://localhost:3000/api/v1/activities.json)
+- [http://localhost:3000/api/v1/activities.json?category=cultural](http://localhost:3000/api/v1/activities.json?category=cultural)
+- [http://localhost:3000/api/v1/activities.json?category=cultural&location=indoors](http://localhost:3000/api/v1/activities.json?category=cultural&location=indoors)
+- [http://localhost:3000/api/v1/activities.json?category=cultural&location=indoors&district=Retiro](http://localhost:3000/api/v1/activities.json?category=cultural&location=indoors&district=Retiro)
+
+### 3. Create an endpoint to recommend what to do at a given time
+
+Some examples:
+
+- [http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201212181800&to=201212191230](http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201212181800&to=201212191230)
+- [http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201212181800&to=201212191300](http://localhost:3000/api/v1/recommended_activity.json?category=cultural&from=201212181800&to=201212191300)
