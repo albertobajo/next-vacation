@@ -25,6 +25,14 @@ RSpec.describe '/api/v1/recommended_activities.json', type: :request do
       )
     end
 
+    it 'is expected to return a application/geo+json content-type' do
+      get '/api/v1/recommended_activity.json?' \
+          "category=#{@activity_one.category.name}&" \
+          'from=201912120000&to=201912122300'
+
+      expect(response.content_type).to eq('application/geo+json')
+    end
+
     it 'is expected to return a single activity and all its details, in GeoJSON format' do
       get '/api/v1/recommended_activity.json?' \
           "category=#{@activity_one.category.name}&" \
